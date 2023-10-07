@@ -1,4 +1,4 @@
-package com.example.personalfinancetracker01;
+package com.example.personalfinancetracker01.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.personalfinancetracker01.MainActivity;
+import com.example.personalfinancetracker01.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -42,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (editText.getInputType() == 129) {
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             imageView.setImageDrawable(getDrawable(R.drawable.ic_hide_password));
-        }else {
+        } else {
             editText.setInputType(129);
             imageView.setImageDrawable(getDrawable(R.drawable.ic_show_password));
         }
