@@ -74,14 +74,14 @@
                     android:layout_centerHorizontal="true">
 
                     <EditText
-                        android:id="@+id/etUserName"
+                        android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:background="@drawable/bg_edit_text"
                         android:drawableStart="@drawable/ic_person"
                         android:drawablePadding="10dp"
                         android:ems="10"
-                        android:hint="Name"
+                        android:hint="First Name"
                         android:inputType="textEmailAddress"
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
@@ -89,12 +89,32 @@
                         android:paddingBottom="10dp"
                         android:textColor="@color/black" />
 
+
+                    <EditText
+                        android:id="@+id/etLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_edit_text"
+                        android:drawableStart="@drawable/ic_person"
+                        android:drawablePadding="10dp"
+                        android:layout_below="@+id/etFirstName"
+                        android:ems="10"
+                        android:hint="Last Name"
+                        android:layout_marginTop="20dp"
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/black" />
+
+
                     <EditText
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_marginTop="20dp"
-                        android:layout_below="@+id/etUserName"
+                        android:layout_below="@+id/etLastName"
                         android:background="@drawable/bg_edit_text"
                         android:drawableStart="@drawable/ic_email"
                         android:drawablePadding="10dp"
@@ -215,7 +235,7 @@
 
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-            android:text="Sign In"
+            android:text="Register"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:background="@drawable/bg_actions_buttons" />
