@@ -1,26 +1,44 @@
 package com.example.personalfinancetracker01.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.personalfinancetracker01.data.Expenses;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import edu.nwmissouri.personalfinancetracker.R;
 
-import com.example.personalfinancetracker01.R;
 
+public class ExpenseAdapter extends ListAdapter<Expenses, ExpenseAdapter.ViewHolder> {
 
-public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    private List<ExpenseItem> expenseList;
-
-    public ExpenseAdapter(List<ExpenseItem> expenseList) {
-        this.expenseList = expenseList;
+    public ExpenseAdapter() {
+        super(diffCallback);
     }
+
+    private static final DiffUtil.ItemCallback<Expenses> diffCallback = new DiffUtil.ItemCallback<Expenses>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Expenses oldItem, @NonNull Expenses newItem) {
+            return oldItem.getId() == newItem.getId(); // Assuming there's an ID field in Expenses class
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Expenses oldItem, @NonNull Expenses newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 
     @NonNull
     @Override
@@ -31,15 +49,10 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExpenseItem expenseItem = expenseList.get(position);
+        Expenses expenseItem = getItem(position);
         holder.categoryTextView.setText(expenseItem.getCategory());
-        holder.amountTextView.setText(expenseItem.getAmount());
-        holder.dateTextView.setText(expenseItem.getDate());
-    }
-
-    @Override
-    public int getItemCount() {
-        return expenseList.size();
+        holder.amountTextView.setText("$" + expenseItem.getAmount());
+        holder.dateTextView.setText(dateFormat.format(expenseItem.getDate()));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,4 +68,3 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         }
     }
 }
-
