@@ -1,6 +1,5 @@
 package com.example.personalfinancetracker01.Manager;
 
-
 public class DatabaseManager {
     private static DatabaseManager instance;
 
@@ -42,7 +41,7 @@ public class DatabaseManager {
 
 
     public void setEmail(String email) {
-        this.email = email;
+       this.email = email;
     }
 
     public void setFirstName(String firstName) {
@@ -75,4 +74,3 @@ public class DatabaseManager {
         return mobile;
     }
 }
-

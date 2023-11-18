@@ -1,30 +1,44 @@
 package com.example.personalfinancetracker01;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
-import com.example.personalfinancetracker01.auth.LoginActivity;
-import com.example.personalfinancetracker01.fragments.ExpensesFragment;
-import com.example.personalfinancetracker01.fragments.ProfileFragment;
-import com.example.personalfinancetracker01.fragments.SalaryFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import edu.nwmissouri.personalfinancetracker.auth.LoginActivity;
+import edu.nwmissouri.personalfinancetracker.data.AppDao;
+import edu.nwmissouri.personalfinancetracker.data.AppDatabase;
+import edu.nwmissouri.personalfinancetracker.fragments.ExpensesFragment;
+import edu.nwmissouri.personalfinancetracker.fragments.ProfileFragment;
+import edu.nwmissouri.personalfinancetracker.fragments.SalaryFragment;
+import edu.nwmissouri.personalfinancetracker.helper.SharedPreferencesUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment salaryFragment;
     private Fragment expensesFragment;
     private Fragment profileFragment;
+    ImageView iv;
+
+    AppDatabase db;
+    AppDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = AppDatabase.getDatabase(getApplicationContext());
+        dao = db.appDao();
+
+        iv = findViewById(R.id.ivLogout);
 
         // Initialize fragments
         salaryFragment = new SalaryFragment();
@@ -39,26 +53,40 @@ public class MainActivity extends AppCompatActivity {
         // Initialize and set up the BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
+
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+
+            bottomNavigationView.getMenu().findItem(R.id.menu_salary).setChecked(false);
+            bottomNavigationView.getMenu().findItem(R.id.menu_expenses).setChecked(false);
+            bottomNavigationView.getMenu().findItem(R.id.menu_profile).setChecked(false);
+
             int itemId = item.getItemId();
             if (itemId == R.id.menu_salary) {
                 loadFragment(salaryFragment);
+                item.setChecked(true);
                 return true;
             } else if (itemId == R.id.menu_expenses) {
                 loadFragment(expensesFragment);
+                item.setChecked(true);
                 return true;
             } else if (itemId == R.id.menu_profile) {
                 loadFragment(profileFragment);
+                item.setChecked(true);
                 return true;
             }
             return false;
         });
 
-
         // Set the initial fragment
         loadFragment(salaryFragment);
-
         setupViews();
+
+        iv.setOnClickListener(view -> {
+            SharedPreferencesUtils.clearAll(this);
+            startActivity(new Intent(MainActivity.this, SplashScreen.class));
+            finishAffinity();
+        });
+
     }
 
     private void loadFragment(Fragment fragment) {
@@ -75,4 +103,6 @@ public class MainActivity extends AppCompatActivity {
     private void onClickOnLogout(View v) {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
+
 }
+

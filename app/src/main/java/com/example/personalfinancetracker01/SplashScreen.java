@@ -1,13 +1,16 @@
-package edu.nwmissouri.personalfinancetracker;
+package com.example.personalfinancetracker01;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import edu.nwmissouri.personalfinancetracker.auth.LoginActivity;
+import edu.nwmissouri.personalfinancetracker.helper.SharedPreferencesUtils;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -22,12 +25,10 @@ public class SplashScreen extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         animateLogo();
-        new Handler(Looper.getMainLooper()).postDelayed(this::handleNavigation, 3000);
+        new Handler(Looper.getMainLooper()).postDelayed(this::handleNavigation, 1000);
     }
 
     private void animateLogo() {
-
-
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.3f);
         anim.setRepeatCount(Animation.INFINITE);
         anim.setRepeatMode(Animation.REVERSE);
@@ -36,16 +37,12 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void handleNavigation() {
-
-        startActivity(new Intent(SplashScreen.this, LoginActivity.class));
-
-//        if ( getCurrentUser() == null) {
-//            startActivity(new Intent(SplashScreen.this, LoginActivity.class));
-//        }else {
-//            startActivity(new Intent(SplashScreen.this, MainActivity.class));
-//        }
+        if (SharedPreferencesUtils.getUser(this) == null) {
+            startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+        } else {
+            startActivity(new Intent(SplashScreen.this, MainActivity.class));
+        }
         finish();
     }
-
 
 }
